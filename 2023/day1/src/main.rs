@@ -2,6 +2,7 @@ use regex::Match;
 use regex::Regex;
 use std::fs;
 
+#[allow(dead_code)]
 fn first_puzzle() {
     // searched: the sum of all numbers
     let mut sum = 0;
@@ -9,8 +10,6 @@ fn first_puzzle() {
     let file_path = "/mnt/e/dev/github/advent-of-code/2023/day1/input.txt";
     let content = fs::read_to_string(file_path).expect("Should have been able to read the file");
     let lines = content.split("\n");
-    let re = Regex::new(r"[0-9]|zero|one|two|three|four|five|six|seven|eight|nine|ten")
-        .expect("Regex could not be parsed");
     for line in lines {
         // filter line
         let string_nums: Vec<char> = line.chars().filter(|char| char.is_ascii_digit()).collect();
@@ -61,7 +60,7 @@ fn second_puzzle() {
 
     let re = Regex::new(r"[0-9]|zero|one|two|three|four|five|six|seven|eight|nine")
         .expect("Regex could not be parsed");
-    let reverse_re = Regex::new(r"[0-9]|orez|owt|eerht|ruof|evif|xis|neves|thgie|enin")
+    let reverse_re = Regex::new(r"[0-9]|orez|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin")
         .expect("Regex could not be parsed");
 
     for line in lines {
@@ -75,6 +74,7 @@ fn second_puzzle() {
         let last_match_matches = reverse_re.find_iter(&reversed_line).collect::<Vec<Match>>();
 
         let first_str = first_match_matches.first().unwrap().as_str();
+
         let last_str = last_match_matches
             .first()
             .unwrap()
@@ -86,11 +86,7 @@ fn second_puzzle() {
         let first_num = converter(first_str);
         let last_num = converter(&last_str);
 
-        println!("{line}");
-        println!("{first_num} | {last_num}");
         let num = first_num * 10 + last_num;
-        println!("{num}");
-        println!("");
 
         // add num to sum
         sum += num;
